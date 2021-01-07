@@ -29,6 +29,8 @@ import {mainReducer} from './reducers/mainReducer';
 
 import "@hig/fonts/build/ArtifaktElement.css";
 
+import 'alertifyjs/build/css/alertify.min.css';
+
 /* eslint-disable no-undef */
 
 // Turn off exception overlay on develop environment because ForgeViewer is causing an issue while removing it from DOM by throwing unhandled exceptions (by showing and immediately hiding ForgeViewer)

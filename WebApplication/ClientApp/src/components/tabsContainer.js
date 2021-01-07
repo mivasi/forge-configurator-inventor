@@ -31,11 +31,11 @@ import Drawing from './drawing';
 
 export class TabsContainer extends Component {
 
-    onTabChange(index) {
-      this.props.updateActiveTabIndex(index);
-    }
+  onTabChange(index) {
+    this.props.updateActiveTabIndex(index);
+  }
 
-    render() {
+  render() {
 
         const idx = this.props.activeTabIndex;
         const showProjectsTab = this.props.embeddedModeEnabled;
@@ -90,9 +90,9 @@ export class TabsContainer extends Component {
 }
 
 /* istanbul ignore next */
-export default connect(function (store){
+export default connect(function (store) {
   return {
     activeTabIndex: activeTabIndex(store),
     embeddedModeEnabled: embeddedModeEnabled(store)
   };
-}, { updateActiveTabIndex } )(TabsContainer);
+}, { updateActiveTabIndex })(TabsContainer);

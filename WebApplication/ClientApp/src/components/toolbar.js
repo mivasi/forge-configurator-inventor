@@ -68,11 +68,11 @@ export class Toolbar extends Component {
       <div>
         <TopNav
           logo={
-            <Logo link="https://forge.autodesk.com" label="Autodesk HIG">
+            <Logo  link="https://www.kingsleyplastics.co.uk/" label="Kıngsley Plastics">
               <PlaceCenterContainer>
-                <img src={"logo.png"} alt="" />
+                <img className="Logo" src={"https://www.kingsleyplastics.co.uk/wp-content/themes/kingsley-2017/img/header-logo-sm.png"} alt="" />
                 <LogoText>
-                    <Typography style={{ fontSize: '16px'}}>AUTODESK<sup>®</sup> <strong>FORGE</strong></Typography>
+                    <Typography style={{ fontSize: '16px'}}>KINGSLEY PLASTICS</Typography>
                 </LogoText>
               </PlaceCenterContainer>
             </Logo>
