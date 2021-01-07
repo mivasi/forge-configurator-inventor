@@ -124,14 +124,14 @@ namespace WebApplication.Controllers
             _sender = new Sender(this);
         }
 
-        public async Task CreateUpdateJob(string projectId, InventorParameters parameters, string token)
+        public async Task CreateUpdateJob(string projectId, string currentHash, InventorParameters parameters, string token)
         {
             _logger.LogInformation($"invoked CreateJob, connectionId : {Context.ConnectionId}");
 
             _profileProvider.Token = token;
 
             // create job and run it
-            var job = new UpdateModelJobItem(_logger, projectId, parameters, _projectWork);
+            var job = new UpdateModelJobItem(_logger, projectId, currentHash, parameters, _projectWork);
             await RunJobAsync(job);
         }
 

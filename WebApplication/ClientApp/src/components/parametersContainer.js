@@ -51,7 +51,7 @@ export class ParametersContainer extends Component {
     }
 
     updateClicked() {
-        this.props.updateModelWithParameters(this.props.activeProject.id, this.props.projectUpdateParameters);
+        this.props.updateModelWithParameters(this.props.activeProject, this.props.projectUpdateParameters);
         // mark drawing as not valid if any available
         this.props.invalidateDrawing();
         this.setState({ IsUpdateOnViewer: true });
