@@ -67,32 +67,8 @@ export class ParametersContainer extends Component {
     }
 
     // Create Order Post Function
-    createOrder(user) {
-        if (/*this.state.IsUpdateOnViewer*/true) {
-            const axios = require('axios');
-            axios.post('https://codeokingsleytest.azurewebsites.net/api/order?json=' + JSON.stringify({
-                username: user,
-                projectID: this.props.activeProject.id,
-                hash: this.props.activeProject.hash,
-                datetime: Date().toLocaleString()
-            })).then(resp => {
-                console.log(resp.data);
-                console.log(user);
-            }).catch(error => {
-                console.log(error);
-                console.log("asdsa");
-            });
-            alertify.success("Your order has been received", 5);
-            this.setState({ IsUpdateOnViewer: false });
-        }
-        else {
-            alertify.error("You must update the model first", 3);
-        }
-
-    }
-
     onCreateOrder = () => {
-        if (/*this.state.IsUpdateOnViewer*/true) {
+        if (this.state.IsUpdateOnViewer) {
             let modelName = this.props.projectUpdateParameters[0].value;
             let Width = parseFloat(this.props.projectUpdateParameters[1].value.replace("mm", ""));
             let Length = parseFloat(this.props.projectUpdateParameters[2].value.replace("mm", ""));
