@@ -34,10 +34,14 @@ import { axios } from 'axios';
 import ReactDOM from "react-dom";
 import alertify from "alertifyjs";
 
+
+import ModalCreatePart from './modalCreatePart';
+
 export class ParametersContainer extends Component {
 
     state = {
-        IsUpdateOnViewer: false
+        IsUpdateOnViewer: false,
+        CreatePartModalShow: false
     }
 
     componentDidMount() {
@@ -66,6 +70,12 @@ export class ParametersContainer extends Component {
         this.props.hideModalProgress();
     }
 
+
+    // Create Part Click
+    onClickCreatePart() {
+        this.setState({ CreatePartModalShow: true });
+    }
+
     // Create Order Post Function
     onCreateOrder = () => {
         if (this.state.IsUpdateOnViewer) {
@@ -80,7 +90,7 @@ export class ParametersContainer extends Component {
                 projectID: this.props.activeProject.id,
                 hash: this.props.activeProject.hash,
                 datetime: Date().toLocaleString(),
-                model: modelName+ "-" + Width + "-" + Length + "-" + Height+ "-" + date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+"-"+date.getHours()+":"+date.getMinutes()
+                partNumber: modelName + "-" + Width + "-" + Length + "-" + Height + "-" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + "-" + date.getHours() + ":" + date.getMinutes()
             }
 
             fetch('https://codeokingsleytest.azurewebsites.net/api/order', {
@@ -110,6 +120,7 @@ export class ParametersContainer extends Component {
         const tooltipProps = adoptWarning ? { openOnHover: true, content: () => <div className="warningButtonTooltip">{adoptWarning}</div> } : { open: false };
         const buttonProps = adoptWarning ? { type: "secondary", icon: <Alert24 style={{ color: "orange" }} /> } : { type: "primary" };
 
+        let CreatePartModalClose = () => this.setState({ CreatePartModalShow: false });
         return (
             <div className="parametersContainer">
                 <div className="pencilContainer">
@@ -163,6 +174,16 @@ export class ParametersContainer extends Component {
                                 onClose={() => this.onUpdateFailedCloseClick()}
                                 errorData={this.props.errorData} />
                         }
+
+                        {this.state.CreatePartModalShow &&
+                            <ModalCreatePart
+                            show={this.state.CreatePartModalShow}
+                            onHide={CreatePartModalClose}
+                            />
+                        }
+
+
+
                     </div>
                 </div>
 
@@ -172,11 +193,22 @@ export class ParametersContainer extends Component {
                     <div style={{ width: '14px' }} />
                     <div width="grow" /*this div makes the size of the Button below not to be broken by the encapsulating Tooltip*/>
                         <Tooltip {...tooltipProps} className="paramTooltip" anchorPoint="top-center">
+                            <Button id="createPartButton"
+                                style={{ width: '230px' }}
+                                {...buttonProps}
+                                size="standard"
+                                title="Create Part"
+                                width="grow"
+                                onClick={() => { this.onClickCreatePart() }}
+                            />
+                        </Tooltip>
+                        <hr></hr>
+                        <Tooltip {...tooltipProps} className="paramTooltip" anchorPoint="top-center">
                             <Button id="createOrderButton"
                                 style={{ width: '230px' }}
                                 {...buttonProps}
                                 size="standard"
-                                title="Create Order"
+                                title="Add To Order"
                                 width="grow"
                                 onClick={() => this.onCreateOrder()}
                             />
