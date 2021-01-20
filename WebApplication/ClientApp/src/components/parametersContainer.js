@@ -36,12 +36,14 @@ import alertify from "alertifyjs";
 
 
 import ModalCreatePart from './modalCreatePart';
+import AddToOrder from './addToOrder';
 
 export class ParametersContainer extends Component {
 
     state = {
         IsUpdateOnViewer: false,
-        CreatePartModalShow: false
+        CreatePartModalShow: false,
+        AddToOrderShow: false
     }
 
     componentDidMount() {
@@ -76,9 +78,14 @@ export class ParametersContainer extends Component {
         this.setState({ CreatePartModalShow: true });
     }
 
+    // Add To Order Click
+    onClickAddToOrder() {
+        this.setState({ AddToOrderShow: true });
+    }
+
     // Create Order Post Function
     onCreateOrder = () => {
-        if (this.state.IsUpdateOnViewer) {
+        if (/*this.state.IsUpdateOnViewer*/true) {
             let modelName = this.props.projectUpdateParameters[0].value;
             let Width = parseFloat(this.props.projectUpdateParameters[1].value.replace("mm", ""));
             let Length = parseFloat(this.props.projectUpdateParameters[2].value.replace("mm", ""));
@@ -93,7 +100,7 @@ export class ParametersContainer extends Component {
                 partNumber: modelName + "-" + Width + "-" + Length + "-" + Height + "-" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + "-" + date.getHours() + ":" + date.getMinutes()
             }
 
-            fetch('https://codeokingsleytest.azurewebsites.net/api/order', {
+            fetch('http://localhost:3000/orders', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(orderDetail)
@@ -121,6 +128,8 @@ export class ParametersContainer extends Component {
         const buttonProps = adoptWarning ? { type: "secondary", icon: <Alert24 style={{ color: "orange" }} /> } : { type: "primary" };
 
         let CreatePartModalClose = () => this.setState({ CreatePartModalShow: false });
+        let AddToOrderModalClose = () => this.setState({ AddToOrderShow: false });
+
         return (
             <div className="parametersContainer">
                 <div className="pencilContainer">
@@ -177,8 +186,19 @@ export class ParametersContainer extends Component {
 
                         {this.state.CreatePartModalShow &&
                             <ModalCreatePart
-                            show={this.state.CreatePartModalShow}
-                            onHide={CreatePartModalClose}
+                                show={this.state.CreatePartModalShow}
+                                onHide={CreatePartModalClose}
+                                data={this.props}
+                                
+                            />
+                        }
+
+                        {this.state.AddToOrderShow &&
+                            <AddToOrder
+                                props={this.props}
+                                show={this.state.AddToOrderShow}
+                                onHide={AddToOrderModalClose}
+                                onCreateOrder={this.onCreateOrder}
                             />
                         }
 
@@ -210,7 +230,7 @@ export class ParametersContainer extends Component {
                                 size="standard"
                                 title="Add To Order"
                                 width="grow"
-                                onClick={() => this.onCreateOrder()}
+                                onClick={() => { this.onClickAddToOrder() }}
                             />
                         </Tooltip>
                     </div>
